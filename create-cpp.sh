@@ -1,15 +1,11 @@
 #!/bin/bash
-
 arg1=$1
 arg2=$2
-
-
 err(){
     err=$1
     echo -e "$1"
     exit 1
 }
-
 if [ $# -gt 2 ] || [ $# -eq 0 ]; then
     err "Valid argument format:\n -create-cpp [PROJECT-NAME]\n -create-cpp [PATH] [PROJECT-NAME]"
 fi
@@ -21,7 +17,6 @@ else
     path=$1
     proj=$2
 fi
-
 
 if ! grep '^[-0-9a-zA-Z]*$' <<< $proj; then
     err "Valid project name must only contain: [a-z][A-Z][0-9][-]"
@@ -55,21 +50,15 @@ INC := -I include
 
 \$(TARGET): \$(OBJECTS); \
     @echo " Linking..."; \
-    @echo " \$(CC) \$^ -o \$(TARGET) "; \$(CC) \$^ -o \$(TARGET) 
-
+    echo " \$(CC) \$^ -o \$(TARGET) "; \$(CC) \$^ -o \$(TARGET) 
 \$(BUILDDIR)/%.o: \$(SRCDIR)/%.\$(SRCEXT); \
     @mkdir -p \$(BUILDDIR); \
-    @echo " \$(CC) \$(CFLAGS) \$(INC) -c -o \$@ $<"; \$(CC) \$(CFLAGS) \$(INC) -c -o \$@ \$<
-
+    echo " \$(CC) \$(CFLAGS) \$(INC) -c -o \$@ $<"; \$(CC) \$(CFLAGS) \$(INC) -c -o \$@ \$<
 clean:; \
     @echo " Cleaning..." ; \
-    @echo " \$(RM) -r \$(BUILDDIR) \$(TARGET)"; \$(RM) -r \$(BUILDDIR) \$(TARGET)
-
+    echo " \$(RM) -r \$(BUILDDIR) \$(TARGET)"; \$(RM) -r \$(BUILDDIR) \$(TARGET)
 # Tests
 tester:; \
     \$(CC) \$(CFLAGS) test/tester.cpp \$(INC)  -o bin/tester
-
-
-
 .PHONY: clean
 EOM
